@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算机专业分流道法术器拆解</title>
+    <style>
+        :root {
+            --bg-primary: #FAF7F2;
+            --bg-secondary: #F0EBE3;
+            --text-primary: #1A1A1A;
+            --text-secondary: #4A4A4A;
+            --text-muted: #7A7A7A;
+            --accent-rust: #C45C3E;
+            --accent-navy: #1E3A5F;
+            --accent-gold: #B8860B;
+            --border-subtle: #E5DFD5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background: var(--accent-rust);
+            color: white;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif SC', '宋体', 'SimSun', Georgia, serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        /* Header */
+        .masthead {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .masthead::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(196, 92, 62, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(30, 58, 95, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .masthead-label {
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-rust);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .masthead h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .masthead-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .masthead-meta {
+            display: flex;
+            gap: 3rem;
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 100;
+            padding: 1rem 2rem;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-rust);
+        }
+
+        /* Sections */
+        .section {
+            padding: 8rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            padding-bottom: 3rem;
+            border-bottom: 2px solid var(--text-primary);
+        }
+
+        .section-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 900;
+            color: var(--accent-rust);
+            line-height: 1;
+            opacity: 0.8;
+        }
+
+        .section-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-intro .speaker {
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Content blocks */
+        .content-block {
+            margin-bottom: 4rem;
+        }
+
+        .block-label {
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-rust);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .block-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-subtle);
+        }
+
+        .dao-text {
+            font-size: 1.15rem;
+            line-height: 2;
+            color: var(--text-primary);
+        }
+
+        .dao-text p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .dao-text strong {
+            color: var(--accent-rust);
+            font-weight: 600;
+        }
+
+        /* Quote blocks */
+        .quote-block {
+            background: var(--bg-secondary);
+            padding: 2.5rem 3rem;
+            margin: 2.5rem 0;
+            position: relative;
+            border-left: 4px solid var(--accent-rust);
+        }
+
+        .quote-block::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: var(--accent-rust);
+            opacity: 0.2;
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            line-height: 1;
+        }
+
+        .quote-block p {
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* List styles */
+        .shu-list {
+            list-style: none;
+            display: grid;
+            gap: 1.2rem;
+        }
+
+        .shu-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .shu-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-rust);
+            font-weight: 600;
+        }
+
+        /* Qi blocks */
+        .qi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .qi-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Dividers */
+        .section-divider {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-divider span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-rust);
+            opacity: 0.4;
+        }
+
+        /* Connection section */
+        .connection-section {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 6rem 2rem;
+        }
+
+        .connection-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .connection-label {
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-rust);
+            margin-bottom: 2rem;
+        }
+
+        .connection-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            line-height: 1.3;
+        }
+
+        .connection-item {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .connection-item:last-child {
+            border-bottom: none;
+        }
+
+        .connection-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent-rust);
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .connection-item h4 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--bg-primary);
+        }
+
+        .connection-item p {
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 15px;
+            line-height: 1.8;
+            color: rgba(250,247,242,0.7);
+        }
+
+        /* Action section */
+        .action-section {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .action-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .action-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .action-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .action-group {
+            margin-bottom: 4rem;
+        }
+
+        .action-group h3 {
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-rust);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .action-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            align-items: flex-start;
+        }
+
+        .action-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent-navy);
+            opacity: 0.3;
+            min-width: 2rem;
+        }
+
+        .action-content h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-content p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .footer p {
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-header {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-number {
+                font-size: 4rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .masthead-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Masthead -->
+    <header class="masthead">
+        <p class="masthead-label">浙江工商大学 · 计算机专业分流</p>
+        <h1>道法术器<br>拆解手册</h1>
+        <p class="masthead-subtitle">计科 · 软工 · 安全<br>三位系主任权威解读，一次性打通专业选择的底层逻辑</p>
+        <div class="masthead-meta">
+            <span>2026 专业分流</span>
+            <span>计算机科学与技术学院</span>
+            <span>丁欣怡 · 朱东海 · 软件工程系主任</span>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+                <path d="M8 0L8 20M8 20L2 14M8 20L14 14" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <span class="nav-title">道法术器拆解</span>
+            <ul class="nav-links">
+                <li><a href="#jike">计科</a></li>
+                <li><a href="#ruangong">软工</a></li>
+                <li><a href="#anquan">安全</a></li>
+                <li><a href="#connection">跨专业连接</a></li>
+                <li><a href="#action">行动清单</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 计科 Section -->
+    <section class="section" id="jike">
+        <div class="section-header">
+            <div class="section-number">01</div>
+            <div class="section-intro">
+                <h2>计算机科学与技术</h2>
+                <p class="speaker">丁欣怡 · 计科副系主任</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">道 · 底层世界观</p>
+            <div class="dao-text">
+                <p><strong>计科是那个"什么都学"的专业，但这恰恰是它的核心竞争力。</strong></p>
+                <p>你们听到"什么都学"，第一反应可能是"那我不就是什么都会一点、什么都不精吗"？不是的。计科的逻辑是：给你一张完整的地图，而不是一条窄窄的赛道。软件工程研究怎么写复杂的软件，安全专业研究怎么攻防对抗，但计科研究的是——计算机这个东西本身。它为什么这么运转？硬件和软件之间是什么关系？当你把这个问题回答清楚，你既可以去做AI，也可以去做嵌入式，也可以去做机器人。</p>
+
+                <div class="quote-block">
+                    <p>宽口径的真正含义不是"杂"，是"可以自主选择赛道"。我见过太多计科的学生，到了大三才发现自己喜欢安全，才发现自己想做AI——因为前面的基础足够扎实，他们转得动。</p>
+                </div>
+
+                <p><strong>数学和理论不是装饰，是你以后跟机器对话的底层语言。</strong></p>
+                <p>很多人觉得数据结构、算法、离散数学是"考试用的"。等你们真正做过项目就知道，真正的瓶颈从来不是写代码，而是——你怎么描述这个问题，让计算机能够处理。描述问题需要数学思维，需要逻辑结构。这个东西一旦缺了，你后面走得越深越吃力。</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">法 · 方法论</p>
+            <div class="dao-text">
+                <p><strong>专业分流不是选"现在的热门"，是选"未来四年的认知结构"。</strong></p>
+                <p>你选计科，意味着你接下来四年会系统地接触五个领域：理论、硬件系统、软件开发、数据库、AI。你选软件工程，意味着你会在软件工程这个方法论体系里不断深化。你选安全，意味着你会从对抗视角去理解整个计算机系统。这三个选择，培养的是三种完全不同的思维模型。</p>
+
+                <div class="quote-block">
+                    <p>大二开始，你的课就会开始分化，但在此之前，大一所有人学的东西是一样的。也就是说，你有大约一年的时间可以充分了解自己——你是喜欢跟机器打交道还是跟人打交道，你是喜欢搞清楚底层原理还是喜欢快速做出产品。</p>
+                </div>
+
+                <p><strong>两个方向的选课是打通的，不是"选了A就不能学B"。</strong></p>
+                <p>这是计科很大的一个优点。你选了视觉计算方向，发现对嵌入式感兴趣，照样可以去修嵌入式的课。学分修完还有余力，想学什么都可以。计科给你留了这个口子。</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">术 · 具体策略</p>
+            <ul class="shu-list">
+                <li>大一拼命打牢数学和编程基础——这是后面所有东西的地基</li>
+                <li>视觉计算方向适合：AI、计算机视觉、无人驾驶、智慧城市/电商/物流，核心课程是C++、计算机图形学、AI图像处理</li>
+                <li>移动计算方向适合：嵌入式、物联网、工业互联网、机器人开发，核心课程是Java、移动端开发、嵌入式系统</li>
+                <li>博士点已获批——想在本校读博，计科现在有一级学科博士点</li>
+                <li>大二专业核心课：数字逻辑、计算机组成原理、操作系统、计算机网络、编译原理，这五门是计科的骨架</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">器 · 工具清单</p>
+            <div class="qi-grid">
+                <div class="qi-item">C++、Java、Python<br><span style="color: var(--accent-rust)">编程语言全覆盖</span></div>
+                <div class="qi-item">数据结构、算法分析<br><span style="color: var(--accent-rust)">理论地基</span></div>
+                <div class="qi-item">计算机组成原理、分布式系统<br><span style="color: var(--accent-rust)">系统能力</span></div>
+                <div class="qi-item">计算机网络与通信<br><span style="color: var(--accent-rust)">网络思维</span></div>
+                <div class="qi-item">视觉计算、移动开发<br><span style="color: var(--accent-rust)">方向工具包</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"><span>◆</span></div>
+
+    <!-- 软工 Section -->
+    <section class="section" id="ruangong">
+        <div class="section-header">
+            <div class="section-number">02</div>
+            <div class="section-intro">
+                <h2>软件工程</h2>
+                <p class="speaker">软件工程系主任</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">道 · 底层世界观</p>
+            <div class="dao-text">
+                <p><strong>软件工程不是编程，编程只是软件工程五分之一的内容。</strong></p>
+                <p>很多人报软件工程，是因为喜欢"写代码"。我直接告诉你们，这个认知会害死你。软件工程的核心是：认识复杂、解决复杂、控制复杂。需求分析、系统设计、编码、测试、维护——代码只是其中一环。</p>
+
+                <div class="quote-block">
+                    <p>人类社会目前制造的最复杂的东西，就是软件。不是飞机，不是火箭，是软件。一个现代操作系统几千万行代码，几十万行代码里藏着一个bug，等着你去发现。这个复杂程度，是人类历史上前所未有的。</p>
+                </div>
+
+                <p><strong>大模型时代，编程的门槛在降低，但软件工程的门槛没有降低。</strong></p>
+                <p>你们现在可以用AI辅助编程，Copilot、Cursor这些工具确实能帮你写代码。但问题是——AI写出来的代码，它符合你的需求吗？它能通过后续的测试吗？它能被运维团队接手吗？</p>
+
+                <div class="quote-block">
+                    <p>AI会替代的是：只会编程的程序员。不会替代的是：能把复杂问题描述清楚、设计清楚、控制清楚的软件工程师。</p>
+                </div>
+
+                <p>大模型有幻觉，会一本正经地胡说八道。你让AI写了一个功能，上线了，出了问题，谁来读这段代码？谁来改这段代码？你没有软件工程的底子，你连怎么向AI描述"我要改什么"都说不清楚。</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">法 · 方法论</p>
+            <div class="dao-text">
+                <p><strong>AI时代提升两个核心能力：第一，需求理解、分析和拆分能力；第二，整体架构的设计和分析能力。</strong></p>
+                <p>这两件事AI帮不了你。AI是根据你的描述生成内容，你描述不清楚，AI生成的就是垃圾。所以你必须学会系统思考，必须学会理解问题的本质，而不是浮在表面"会用工具"。</p>
+
+                <p><strong>课程体系设计的底层逻辑：让你成为一个能独立完成复杂软件工程全流程的人。</strong></p>
+                <p>互联网软件开发与管理方向，培养的是：客户端开发、交互设计、UI设计、后端服务架构、高性能架构。人工智能与大数据方向，培养的是：自然语言处理、数据挖掘、深度学习、大数据平台技术。这两个方向，一个是做产品，一个是做数据，底层都是软件工程方法论。</p>
+
+                <div class="quote-block">
+                    <p>本科生科研训练项目是这两年我们重点打造的——平时课业繁重，学生工程素养离就业标准有欠缺，实习机会少，不适应社会需求和技术发展。这个项目就是来解决这个gap的。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">术 · 具体策略</p>
+            <ul class="shu-list">
+                <li>互联网软件开发与管理三个方向：移动端开发(Web前端)、游戏开发——各自配套课程，对应不同就业岗位</li>
+                <li>人工智能与大数据方向：NLP、数据挖掘、深度学习、大数据平台技术——毕业后可做AI工程师、数据分析师、AI产品经理</li>
+                <li>本科生科研训练项目：每年9月在公众号发布，联系导师后建立长期指导关系</li>
+                <li>与阿里云、腾讯、网易有合作关系——实习和就业有绿色通道</li>
+                <li>专业核心课：软件需求工程、软件建模与设计、软件质量与测试、软件项目管理——这四门是软工的骨架</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">器 · 工具清单</p>
+            <div class="qi-grid">
+                <div class="qi-item">Java、Python<br><span style="color: var(--accent-rust)">主力语言</span></div>
+                <div class="qi-item">React/Vue等<br><span style="color: var(--accent-rust)">前端框架</span></div>
+                <div class="qi-item">Hadoop、Spark<br><span style="color: var(--accent-rust)">大数据平台</span></div>
+                <div class="qi-item">TensorFlow、PyTorch<br><span style="color: var(--accent-rust)">深度学习</span></div>
+                <div class="qi-item">UML建模工具<br><span style="color: var(--accent-rust)">系统设计</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"><span>◆</span></div>
+
+    <!-- 安全 Section -->
+    <section class="section" id="anquan">
+        <div class="section-header">
+            <div class="section-number">03</div>
+            <div class="section-intro">
+                <h2>信息安全</h2>
+                <p class="speaker">朱东海 · 安全系副系主任</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">道 · 底层世界观</p>
+            <div class="dao-text">
+                <p><strong>安全是伴生行业——有计算机的地方就有安全问题，而且这个问题不会消失。</strong></p>
+                <p>总书记说过，没有网络安全就没有国家安全。我们日常生活中：手机银行、网上交易、医疗记录、政务系统——全都在网上，这些系统一旦被攻破，后果不堪设想。</p>
+
+                <p><strong>AI时代，安全的需求不是减少了，是增加了。</strong></p>
+                <p>大模型来了，安全行业不是受冲击，而是获得了更大的发展空间。为什么？因为AI会产生新的安全问题——模型被对抗样本攻击、训练数据被污染、AI生成的代码有漏洞——这些问题都需要安全专家来解决。</p>
+
+                <div class="quote-block">
+                    <p>逆向工程不是黑客技术，是理解软件最底层的钥匙。逆向工程的本质是：你看到一个程序在运行，你知道它做了什么，但你不一定能看到它的源代码——你需要通过静态和动态分析，还原它的设计逻辑。</p>
+                </div>
+
+                <p><strong>安全专业的上限极高，但前提是你真的下了功夫。</strong></p>
+                <p>我们有一句话：安全专业是"进来容易、出去难"——入门门槛看起来不高，但真正要掌握核心技能，需要大量的实践和钻研。逆向工程、密码学、渗透测试、代码审计——每一项都需要长时间积累。但如果你真的钻研进去了，就业的护城河是非常深的。</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">法 · 方法论</p>
+            <div class="dao-text">
+                <p><strong>安全专业需要"既能，又能"——既能搞懂底层原理，又能动手做渗透测试。</strong></p>
+                <p>光懂理论不行，光会玩工具也不行。你必须既理解计算机系统是怎么运转的，又能在实战中运用这些知识。所以我们的课程设计：数学基础（数论、代数结构）+ 密码学 + 逆向工程 + 渗透测试——这套组合拳打下来，你对计算机系统的理解会比其他专业更深一个层次。</p>
+
+                <div class="quote-block">
+                    <p>张雪峰老师说过，安全专业一方面看你的学历和学校，但另一方面，实践能力足够强的人，即使院校档次不高，也照样受用人单位欢迎。我们专业每年都有学生被重点部门录用，靠的不是学历，是真本事。</p>
+                </div>
+
+                <p><strong>安全创新实验班是给想快速成长的学生的特殊通道。</strong></p>
+                <p>从2024级开始，选拔10多位优秀同学进实验班——跟安恒信息（国内安全行业头部公司）深度绑定：优先实习机会、参与重大安保项目实战、攻防演习、产业导师入校授课。</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">术 · 具体策略</p>
+            <ul class="shu-list">
+                <li>金融科技安全方向：密码学、区块链技术、金融智能安全——用密码学和数学解决金融安全问题</li>
+                <li>人工智能安全方向：对抗样本攻防、信息隐藏、水印、AI鲁棒性——保护AI模型自身的安全</li>
+                <li>安全创新实验班：每年从新生中选拔，绑定安恒资源，优先实习+实战+就业指导</li>
+                <li>重要赛事：长城杯——成绩优秀者有机会直接被重点部门录用</li>
+                <li>渗透测试技能链：逆向工程→恶意代码分析→漏洞挖掘→渗透实战——安全专业的硬核能力</li>
+                <li>考公考编有特殊优势——安全专业毕业生在报考网信、公安等特殊部门时竞争力强</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <p class="block-label">器 · 工具清单</p>
+            <div class="qi-grid">
+                <div class="qi-item">IDA Pro、OllyDbg<br><span style="color: var(--accent-rust)">逆向分析</span></div>
+                <div class="qi-item">Burp Suite、Metasploit<br><span style="color: var(--accent-rust)">渗透测试</span></div>
+                <div class="qi-item">数论、代数结构<br><span style="color: var(--accent-rust)">密码学基础</span></div>
+                <div class="qi-item">区块链安全分析<br><span style="color: var(--accent-rust)">金融安全</span></div>
+                <div class="qi-item">AI对抗样本工具<br><span style="color: var(--accent-rust)">AI安全</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connection Section -->
+    <section class="connection-section" id="connection">
+        <div class="connection-inner">
+            <p class="connection-label">跨专业隐藏连接</p>
+            <h2 class="connection-title">三个专业说的其实是<br>同一件事</h2>
+
+            <div class="connection-item fade-in">
+                <div class="connection-number">01</div>
+                <h4>选专业不是选职业，是选认知模型</h4>
+                <p>计科给你"从底层到应用"的全景视角；软工给你"复杂系统全流程管理"的方法论；安全给你"对抗思维下的系统理解"。三条路殊途同归——最终你都是一个能独立解决复杂问题的人。</p>
+            </div>
+
+            <div class="connection-item fade-in">
+                <div class="connection-number">02</div>
+                <h4>AI会替代工具人，不会替代有系统工程能力的人</h4>
+                <p>计科主任说"计科涵盖软硬件，可以做AI"；软工主任说"AI时代需要的是架构思维和需求分析"；安全主任说"AI会产生新的安全问题，需要人类专家"——三个人从不同角度说了同一句话：<strong style="color: var(--bg-primary)">AI时代最值钱的是理解力，不是操作力。</strong></p>
+            </div>
+
+            <div class="connection-item fade-in">
+                <div class="connection-number">03</div>
+                <h4>软工和安全的实践占比都极高，但底层逻辑不同</h4>
+                <p>软工的实践是在"怎么把产品做完整"——你有idea，要能落地成产品。安全的实践是在"怎么找到产品的漏洞"——你看别人的产品，要能发现问题。<strong style="color: var(--bg-primary)">一个建设，一个破坏；一个进攻，一个防守。但两种思维训练的是同一种能力：系统性、深层次的思考能力。</strong></p>
+            </div>
+
+            <div class="connection-item fade-in">
+                <div class="connection-number">04</div>
+                <h4>三个专业给了三条不同的资源路径</h4>
+                <p>计科有博士点——想做科研走学术路线的人可以在校内直接读博；软工跟阿里云、腾讯、网易全面合作——想就业的人有绿色通道；安全有安恒的实验班——想进安全行业的人有垂直通道。<strong style="color: var(--bg-primary)">你需要想清楚自己走哪条。</strong></p>
+            </div>
+
+            <div class="connection-item fade-in">
+                <div class="connection-number">05</div>
+                <h4>安全"不会被AI替代"的论证，恰恰是软工"需要提升架构思维"的反面</h4>
+                <p>安全的逻辑是：AI会产生新问题，所以安全专家不会被替代。软工的逻辑是：AI会做编程，所以需要提升架构能力。<strong style="color: var(--bg-primary)">两者的底层判断一致——AI时代需要的是更高层次的问题定义和系统设计能力，而非更低层次的代码执行。</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Section -->
+    <section class="action-section" id="action">
+        <div class="action-header">
+            <h2>怎么最大化吸收</h2>
+            <p>优先记住三件事 + 今天就能做的三件事</p>
+        </div>
+
+        <div class="action-group">
+            <h3>优先记住的三件事</h3>
+
+            <div class="action-item">
+                <span class="action-number">1</span>
+                <div class="action-content">
+                    <h4>计科是"宽口径"，软工是"深方法"，安全是"对抗性底层思维"</h4>
+                    <p>三个专业没有绝对的好坏，只有适不适合你。你要先问自己：我想不想搞清楚计算机的底层原理？我喜不喜欢跟人协作做复杂系统？我有没有对抗性的好奇心，想搞清楚"这个东西怎么被攻破"？</p>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <span class="action-number">2</span>
+                <div class="action-content">
+                    <h4>大一是你最后一年"不用做决定"的时间，但你要用它充分了解自己</h4>
+                    <p>利用大一多接触各个方向：去计科的实验室看看，去软工的项目群里潜水，去安全的207实验室了解了解——行动比思考更重要。</p>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <span class="action-number">3</span>
+                <div class="action-content">
+                    <h4>无论选哪个专业，数学和编程基础都是最重要的地基</h4>
+                    <p>高数、线代、数据结构、C语言或Python——这些东西你学得越扎实，后面的选择空间就越大。不要等分流了再学，大一这一年是黄金期。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-group">
+            <h3>今天就能做的三件事</h3>
+
+            <div class="action-item">
+                <span class="action-number">A</span>
+                <div class="action-content">
+                    <h4>画一张能力坐标图</h4>
+                    <p>横轴是"技术深度"（底层原理↔应用层），纵轴是"协作方式"（独立研究↔团队协作）。计科偏右上，软工偏中间，安全偏左——你更想往哪个象限走？拿着这张图去对照三个专业的培养方案。</p>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <span class="action-number">B</span>
+                <div class="action-content">
+                    <h4>查三个专业的学长学姐就业和深造情况</h4>
+                    <p>计科的博士点意味着什么？软工的阿里云腾讯合作是什么形式？安全的安恒实验班选拔标准是什么？去公众号、去问学长学姐，越早了解越有方向。</p>
+                </div>
+            </div>
+
+            <div class="action-item">
+                <span class="action-number">C</span>
+                <div class="action-content">
+                    <h4>从今天起把数学和编程基础当成"每天必须做的事"</h4>
+                    <p>无论你最后选哪个专业，高数、线代、数据结构、C语言或Python——每天固定时间学习。大一这一年是黄金期，你现在开始积累，四年后会感谢自己。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>道法术器拆解 · 浙江工商大学计算机专业分流 · 2026</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
